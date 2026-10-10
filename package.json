@@ -1,0 +1,34 @@
+{
+  "name": "@now-holdings/analytics",
+  "version": "0.1.1",
+  "description": "PostHog wrapper for Now Holdings customer surfaces (anonymous, two-doors).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./src/web.js",
+  "exports": {
+    ".": "./src/web.js",
+    "./web": "./src/web.js",
+    "./native": "./src/native.js",
+    "./core": "./src/core.js"
+  },
+  "files": [
+    "src/**/*.js",
+    "!src/**/*.test.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test src/*.test.js"
+  },
+  "dependencies": {
+    "posthog-js": "^1.176.0"
+  },
+  "peerDependencies": {
+    "posthog-react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "posthog-react-native": {
+      "optional": true
+    }
+  }
+}
