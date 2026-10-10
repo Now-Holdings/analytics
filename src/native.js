@@ -16,4 +16,4 @@ export function capture() {}
 export function captureException() {}
 export function identify() {}
 
-export { baseProperties, sanitizeProperties, isEnabled } from "./core.js";
+export { baseProperties, eventProperties, sanitizeProperties, isEnabled } from "./core.js";

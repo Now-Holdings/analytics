@@ -1,5 +1,5 @@
 import posthog from "posthog-js";
-import { baseProperties, isEnabled, sanitizeProperties } from "./core.js";
+import { eventProperties, isEnabled } from "./core.js";
 
 /** @type {import("./core.js").InitOptions | null} */
 let options = null;
@@ -34,10 +34,7 @@ export function capture(event, props) {
   if (!started || !options) {
     return;
   }
-  posthog.capture(event, {
-    ...baseProperties(options),
-    ...sanitizeProperties(props),
-  });
+  posthog.capture(event, eventProperties(options, props));
 }
 
 /**
@@ -48,7 +45,7 @@ export function captureException(err, props) {
   if (!started || !options) {
     return;
   }
-  const extra = { ...baseProperties(options), ...sanitizeProperties(props) };
+  const extra = eventProperties(options, props);
   if (typeof posthog.captureException === "function") {
     posthog.captureException(err, extra);
     return;
@@ -62,4 +59,4 @@ export function identify() {
   // Policy: no identify() until observability.md is updated.
 }
 
-export { baseProperties, sanitizeProperties, isEnabled } from "./core.js";
+export { baseProperties, eventProperties, sanitizeProperties, isEnabled } from "./core.js";

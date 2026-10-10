@@ -11,7 +11,18 @@
  * @property {string} [environment]
  */
 
-const PII_KEYS = new Set(["email", "phone", "name", "address", "full_name", "phone_number"]);
+const PII_KEYS = new Set([
+  "email",
+  "phone",
+  "name",
+  "address",
+  "full_name",
+  "phone_number",
+  "user_email",
+  "$email",
+]);
+
+const RESERVED_KEYS = new Set(["door", "product", "platform", "environment"]);
 
 /**
  * @param {InitOptions} opts
@@ -37,12 +48,25 @@ export function sanitizeProperties(props) {
   /** @type {Record<string, unknown>} */
   const out = {};
   for (const [key, value] of Object.entries(props)) {
-    if (PII_KEYS.has(key.toLowerCase())) {
+    const lower = key.toLowerCase();
+    if (PII_KEYS.has(lower) || RESERVED_KEYS.has(lower)) {
       continue;
     }
     out[key] = value;
   }
   return out;
+}
+
+/**
+ * Event properties: caller props first, then locked door/product/platform/environment.
+ * @param {InitOptions} opts
+ * @param {Record<string, unknown>} [props]
+ */
+export function eventProperties(opts, props) {
+  return {
+    ...sanitizeProperties(props),
+    ...baseProperties(opts),
+  };
 }
 
 export function isEnabled(opts) {

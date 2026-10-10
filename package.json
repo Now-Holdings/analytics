@@ -1,6 +1,6 @@
 {
   "name": "@now-holdings/analytics",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "PostHog wrapper for Now Holdings customer surfaces (anonymous, two-doors).",
   "license": "Apache-2.0",
   "type": "module",
@@ -12,8 +12,10 @@
     "./core": "./src/core.js"
   },
   "files": [
-    "src",
-    "README.md"
+    "src/**/*.js",
+    "!src/**/*.test.js",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "test": "node --test src/*.test.js"
